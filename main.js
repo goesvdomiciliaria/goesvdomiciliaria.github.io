@@ -41,6 +41,18 @@ function callGoogleScript(action, params) {
 document.getElementById('visitaForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    
+    // Evitar múltiples envíos
+    if (submitButton.classList.contains('loading')) {
+        return;
+    }
+    
+    // Agregar estado de carga
+    submitButton.classList.add('loading');
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = '<span class="spinner"></span>Guardando...';
+    
     const formData = {
         fecha: new Date().toISOString(),
         nombre: document.getElementById('nombre').value.trim(),
@@ -66,6 +78,10 @@ document.getElementById('visitaForm').addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Error al guardar:', error);
         alert('Error al guardar el registro');
+    } finally {
+        // Restaurar el botón
+        submitButton.classList.remove('loading');
+        submitButton.innerHTML = originalText;
     }
 });
 
