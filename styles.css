@@ -8,10 +8,11 @@
     --background-color: #f8fafc; /* Fondo muy suave */
     --text-color: #334155;       /* Texto principal */
     --border-color: #e2e8f0;     /* Bordes suaves */
+    --font-primary: 'Anaheim', sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-primary);
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
@@ -50,6 +51,7 @@ body {
 }
 
 .form-group {
+    position: relative;
     margin-bottom: 1.5rem;
 }
 
@@ -61,12 +63,15 @@ label {
 }
 
 input, select, textarea {
-    width: 100%;
+    width: calc(100% - 2.5rem);
     padding: 0.75rem;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+    max-width: 100%;
+    font-family: var(--font-primary);
 }
 
 input:focus, select:focus, textarea:focus {
@@ -178,6 +183,15 @@ tr:hover {
         display: block;
         overflow-x: auto;
     }
+    
+    input[list] {
+        width: 100%;
+        padding-right: 2.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
 }
 
 #map {
@@ -200,25 +214,135 @@ tr:hover {
 /* Panel Administrativo */
 #admin-panel {
     background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+#admin-panel h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#admin-panel h2::before {
+    content: '📊';
+    font-size: 1.8rem;
 }
 
 .filters {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
     display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
 }
 
+.filters input[type="date"],
+.filters select {
+    min-width: 200px;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+}
+
+#aplicar-filtros {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#aplicar-filtros::before {
+    content: '🔍';
+    font-size: 1.2rem;
+}
+
+#aplicar-filtros:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 143, 195, 0.2);
+}
+
+/* Mejoras en la tabla */
+#registros-tabla {
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+#registros-tabla th {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+}
+
+#registros-tabla td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+#registros-tabla tr:hover {
+    background: #f1f5f9;
+}
+
+.ver-detalles-btn {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ver-detalles-btn::before {
+    content: '👁️';
+    font-size: 1.1rem;
+}
+
+.ver-detalles-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 95, 122, 0.2);
+}
+
+/* Mejoras en el mapa administrativo */
 #admin-map {
-    height: 400px;
-    margin: 20px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    height: 500px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin: 2rem 0;
 }
 
+/* Botón de acceso admin */
 #admin-access {
     position: fixed;
     bottom: 20px;
@@ -226,7 +350,7 @@ tr:hover {
     background-color: var(--primary-color);
     padding: 15px;
     border-radius: 50%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 900;
@@ -238,9 +362,8 @@ tr:hover {
 }
 
 #admin-access:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    background-color: #34495e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 #admin-access img {
@@ -251,61 +374,55 @@ tr:hover {
 
 /* Modal de login */
 #login-modal .modal-content {
-    max-width: 400px;
-    padding: 0;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 #login-modal .modal-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 20px;
-    border-radius: 15px 15px 0 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 1.5rem;
 }
 
 #login-modal .modal-header h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: white;
+    font-weight: normal;
+    letter-spacing: 1px;
 }
 
 #login-modal .modal-body {
-    padding: 30px;
-}
-
-#login-modal .form-group {
-    margin-bottom: 25px;
+    padding: 2rem;
 }
 
 #login-modal input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #e2e8f0;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
-    font-size: 16px;
     transition: all 0.3s ease;
 }
 
 #login-modal input[type="password"]:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 4px rgba(44, 143, 195, 0.1);
 }
 
-#login-modal #login-btn {
+#login-btn {
     width: 100%;
-    padding: 12px;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
+    padding: 1rem;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
-#login-modal #login-btn:hover {
-    background-color: #34495e;
+#login-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 95, 122, 0.2);
 }
 
 .modal.active {
@@ -338,6 +455,7 @@ tr:hover {
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     animation: modalSlideIn 0.3s ease-out;
+    z-index: 1001;
 }
 
 @keyframes modalSlideIn {
@@ -613,4 +731,27 @@ tr:hover {
     color: #166534;  /* Verde más oscuro para el texto */
     font-size: 1rem;
     font-weight: 500;
+}
+
+input[list] {
+    width: calc(100% - 2.5rem);
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>') no-repeat right 0.75rem center/16px 16px;
+    padding-right: 2.5rem;
+    background-color: white;
+}
+
+input[list]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    width: 2.5rem;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+/* Estilos para las opciones del datalist cuando se muestran */
+datalist {
+    max-height: 200px;
+    overflow-y: auto;
 } 
