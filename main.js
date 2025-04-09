@@ -4,6 +4,10 @@ const SCRIPT_ID = 'AKfycbxdtSDbHYnXMOKI5RjV0qQDaAwPd_YQ5k5y_OocaG1S'; // ID del 
 // Configuración del acceso administrativo
 const ADMIN_PASSWORD = '123456'; // Cambia esto por una contraseña segura
 
+// Agregar al inicio del archivo, después de las variables globales
+let nombresLista = [];
+let unidadesLista = [];
+
 // Función para generar un nombre de callback único
 function generateCallback() {
     return 'callback_' + Date.now();
@@ -268,4 +272,59 @@ function mostrarDetalles(registro) {
 // Eliminar la función global verDetallesRegistro ya que no la necesitamos más
 if (window.verDetallesRegistro) {
     delete window.verDetallesRegistro;
-} 
+}
+
+// Función para cargar las matrices
+async function cargarMatrices() {
+    try {
+        const response = await callGoogleScript('obtenerMatrices', {});
+        if (response.success) {
+            nombresLista = response.nombres;
+            unidadesLista = response.unidades;
+            
+            // Llenar los datalists
+            const nombresDatalist = document.getElementById('nombres-list');
+            const unidadesDatalist = document.getElementById('unidades-list');
+            
+            nombresDatalist.innerHTML = nombresLista
+                .map(nombre => `<option value="${nombre}">`)
+                .join('');
+                
+            unidadesDatalist.innerHTML = unidadesLista
+                .map(unidad => `<option value="${unidad}">`)
+                .join('');
+                
+            // También actualizar el select del filtro de unidades en el panel admin
+            const unidadFiltro = document.getElementById('unidad-filtro');
+            unidadFiltro.innerHTML = '<option value="">Todas las unidades</option>' +
+                unidadesLista.map(unidad => `<option value="${unidad}">${unidad}</option>`).join('');
+        }
+    } catch (error) {
+        console.error('Error al cargar matrices:', error);
+    }
+}
+
+// Modificar el evento DOMContentLoaded para incluir la carga de matrices
+document.addEventListener('DOMContentLoaded', () => {
+    cargarMatrices();
+    // ... resto del código existente
+});
+
+// Agregar validación para los campos de entrada
+document.getElementById('nombre').addEventListener('change', function() {
+    const valor = this.value.trim();
+    if (!nombresLista.includes(valor)) {
+        this.setCustomValidity('Por favor seleccione un nombre de la lista');
+    } else {
+        this.setCustomValidity('');
+    }
+});
+
+document.getElementById('unidad').addEventListener('change', function() {
+    const valor = this.value.trim();
+    if (!unidadesLista.includes(valor)) {
+        this.setCustomValidity('Por favor seleccione una unidad de la lista');
+    } else {
+        this.setCustomValidity('');
+    }
+}); 
