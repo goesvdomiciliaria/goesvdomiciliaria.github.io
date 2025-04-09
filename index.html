@@ -6,6 +6,7 @@
     <title>Registro de Visitas Domiciliarias</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Anaheim&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
@@ -18,17 +19,14 @@
             <form id="visitaForm">
                 <div class="form-group">
                     <label for="nombre">Nombre del Visitado:</label>
-                    <input type="text" id="nombre" required>
+                    <input type="text" id="nombre" list="nombres-list" required>
+                    <datalist id="nombres-list"></datalist>
                 </div>
                 
                 <div class="form-group">
                     <label for="unidad">Unidad en la que trabaja:</label>
-                    <select id="unidad" required>
-                        <option value="">Seleccione una unidad</option>
-                        <option value="unidad1">Unidad 1</option>
-                        <option value="unidad2">Unidad 2</option>
-                        <option value="unidad3">Unidad 3</option>
-                    </select>
+                    <input type="text" id="unidad" list="unidades-list" required>
+                    <datalist id="unidades-list"></datalist>
                 </div>
 
                 <div class="form-group">
