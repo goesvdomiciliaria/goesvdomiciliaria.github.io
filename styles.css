@@ -754,4 +754,71 @@ input[list]::-webkit-calendar-picker-indicator {
 datalist {
     max-height: 200px;
     overflow-y: auto;
+}
+
+/* Estilos para el spinner y botón de carga */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+    margin-right: 12px;
+}
+
+/* Estilo para el botón de submit */
+button[type="submit"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 95, 122, 0.2);
+}
+
+button[type="submit"]:before {
+    content: '💾';
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Estados del botón durante la carga */
+button[type="submit"].loading {
+    background: var(--secondary-color);
+    cursor: not-allowed;
+    opacity: 0.9;
+    transform: none;
+}
+
+button[type="submit"].loading:before {
+    content: '';
+}
+
+@media (max-width: 768px) {
+    button[type="submit"] {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
 } 
